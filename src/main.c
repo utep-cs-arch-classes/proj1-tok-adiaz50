@@ -1,13 +1,19 @@
 #include <stdio.h>
 
 int main(){
-  char input[100];
+  char string[100];
+  char input;
+  short i = 0;
+  printf("Please enter a string:\n");
 
-  printf("Please enter a string:\n>");
-  
-  scanf("%[^\n]", input);
-  
-  printf("Your input: %s\n", input);
+  //scanf("%[^\n]", input);
+
+  putchar('>');
+  for(input; (input = getchar()) != '\n'; i++){
+    string[i] = input;
+    putchar(input);
+  }
+  putchar('\n');
   
   return 0;
 }
