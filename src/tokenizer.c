@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "tokenizer.h"
 
 int space_char(char c){
@@ -39,13 +40,14 @@ char *word_end(char *word){
   return 0;
 }
 
+// use this to copy the words between start and end!!!
 char *copy_str(char *inStr, short len){
   char *Cstr;
   int i;
-  str = (char*)malloc(sizeof(char) * (len+1));
+  Cstr = (char*)malloc(sizeof(char) * (len+1));
 
   for(i = 0; i <= len; i++){
-    *Cstr[i] = *inStr[i];
+    *(Cstr+i) = *(inStr+i);
   }
   return Cstr;
 }
@@ -69,26 +71,34 @@ int count_words(char *str){
 char **tokenize(char* str){
   char wordCount = count_words(str);
   char **tokens;
-  char *pStart;
-  int i = 0;
-  int wordLength = 0;
-  
-  tokens = (char**) malloc(sizeof(char) * (wordCount + 1));
-  
-  for(i = 0; i<= 100; i++){
-    if( non_space_char(str[i]) ){
-      wordLength++;
-      tokens[i] = copy_str(str, wordLength);
-    }
+  char *pStart;// = word_start(str);
+  char *pEnd = word_end(str);
+  int wordLength, i = 0, w = 0;
+
+  tokens = (char**)malloc(sizeof(char*) * (wordCount + 1));
+
+  while( w < wordCount ){
+    pStart = word_start(str);
+    
+    wordLength =(int)(pEnd - pStart);
+    
+    *(tokens+i) = copy_str(pStart, wordLength);
+    pEnd = word_end(str);
+    i++;
+    w++;
   }
-  
+
   return tokens;
 }
 
-char print_tokens(char **tokens){
-  
+void print_tokens(char **tokens){
+  int i;
+  for(i = 0; *(tokens+i) != NULL; i++){
+    printf("HERE: %c", tokens[i]);
+  }
+  printf("\n");
 }
 
-char free_tokens(char **tokens){
-
+void free_tokens(char **tokens){
+  free(tokens);
 }

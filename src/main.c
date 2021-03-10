@@ -16,11 +16,17 @@ int main(){
     input = getchar();
     string[i] = input;
   }
-  printf(string);
+  //printf(string);
   putchar('\n');
-
+  
+  /*
   j = count_words(string);
   printf("Number of words: %d", j);
+  */
   
+  char **tokens;
+  tokens = tokenize(string);
+ 
+  print_tokens(tokens);
   return 0;
 }
